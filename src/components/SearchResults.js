@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {currencySign, currencyFormater } from './utils/AppUtils'
+import { currencyFormater } from './utils/AppUtils'
 
 class SearchResults extends Component{
    
     render(){
-        const defaultConvertionRate=1;
+        
         //format networth       
         let formatedNetworth = currencyFormater(this.props.networth, this.props.currency);
         return (

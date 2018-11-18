@@ -16,7 +16,7 @@ class AppLayout extends Component{
         this.initData();
         this.state = {searchResult : [],currency:AppConstants.USD};
         this.searchFilter = {birthPlace: 'Show All', currencyConvertor: 'US dollar', search: '', orderBy: 'Rank'};
-       // this.filterResults=this.filterResults.bind(this);
+       
     }
 
     //switch searchFilter
@@ -40,32 +40,28 @@ class AppLayout extends Component{
     }
 
     filterResults(input,criteria){
-        console.log(this.state)
-
-       
-        console.log('filterResults called')
+       //Update the filters
         this.setSearchFilter(input,criteria)
+        //initialize the celeb list
         var clist = this.celebrityList.map(a => Object.assign({}, a));
         var result;
-        console.log(clist);
+        
 
 
-        //Currency Convertor
+       
         //Currency Convertor
         var convertor = this.currencyVal[this.searchFilter.currencyConvertor];
         for (let i=0, l= clist.length; i < l; i++) {
             clist[i]['netWorth'] = Math.round(clist[i]['netWorth'] / convertor);
         }
-               result = clist;
+        result = clist;
 
         let value = this.searchFilter.orderBy.toLowerCase();
-        console.log('value');
-        console.log(value);
+        //Sort by name etc. 
         switch(value){
             case 'name':
                 result = clist.sort(filterAlphabetic);
                 break;
-            //case 'age':
             default:
                 result = clist.sort((x, y) => x[value] - y[value]);
         }
@@ -89,12 +85,12 @@ class AppLayout extends Component{
             searchResult: result           
         }));
 
-        //console.log(this.state.searchResult);
+       
        
     }
 
     componentDidMount(){        
-      //  this.initData();
+     //set the state post component mount
       this.setState({
         searchResult: this.celebrityList
     })
@@ -119,11 +115,10 @@ class AppLayout extends Component{
             {inputType:'input_text',label:'Search'}, 
             {inputType:'select',label:'Order By', data:['Rank', 'Name', 'Age']}];
       
-        //3. Initialize currency 
-       
+        //3. Initialize currency        
         this.currencyVal = {'US Dollar': data.usDollarValue, 'Euro' : data.euroValue, 'Australian Dollar' : data.australianDollarValue};
         this.celebrityList = data.celebrityList;            
-        //this.searchResult = data.celebrityList;
+       
         
 
     }
@@ -137,13 +132,13 @@ class AppLayout extends Component{
             
             <Header pageTitleH1={data.pageTitleH1} pageTitleH2={data.pageTitleH2} description={data.description} link={data.referenceLink}/>
             <div className="row" >
-            <div className='jumbotron col-sm-10 col-sm-offset-1'>
-	             {
-                     (this.formInputs).map((item, index)=> 
-                        <Search key={item.label} title={item.label} inputType={item.inputType} data={item.data} changeHandler={(input, criteria) => this.filterResults(input, criteria) }/>
-                        )
-                }
-            </div>
+                <div className='jumbotron col-sm-10 col-sm-offset-1'>
+                    {
+                        (this.formInputs).map((item, index)=> 
+                            <Search key={item.label} title={item.label} inputType={item.inputType} data={item.data} changeHandler={(input, criteria) => this.filterResults(input, criteria) }/>
+                            )
+                    }
+                </div>
             </div>
            
             <div className="row  col-sm-10 col-sm-offset-1" >
@@ -154,13 +149,12 @@ class AppLayout extends Component{
 		    	<div className='panel panel-primary'>
 			        <div className="panel-heading"><strong>No Results Found</strong></div>
 			    </div>
-		    }
-		    
-        </div>
+		    }		    
+            </div>
  
             
             
-          </div>
+        </div>
         )
     }
 }

@@ -9,7 +9,7 @@ export const getUniqueCountries = (data, extraData) => {
           }
       }
       list.sort().unshift(extraData);
-      console.log(list)
+      
       return list;
   }
 
@@ -41,7 +41,7 @@ export const currencyFormater = (num, currency) => {
   var sign = currencySign(currency)
   var p = num.toFixed(0).split('.');
     return sign + p[0].split('').reverse().reduce(function(acc, num, i, orig) {
-        return  num=='-' ? acc : num + (i && !(i % 3) ? ',' : '') + acc;
+        return  num==='-' ? acc : num + (i && !(i % 3) ? ',' : '') + acc;
     }, '');
 }
  
